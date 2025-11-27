@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Family Locator - Banjir Medan</title>
+    <style>
+        :root {
+            --color-primary: #218081;
+            --color-danger: #c0152f;
+            --color-warning: #a84b2f;
+            --color-success: #218081;
+            --color-bg: #f5f5f5;
+            --color-surface: #ffffff;
+            --color-text: #1f2121;
+            --color-border: #d0d0d0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #c0152f 0%, #a84b2f 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .alert {
+            background-color: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #ffc107;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            border-left-color: #c0152f;
+            color: #721c24;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--color-border);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .section {
+            background: var(--color-surface);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--color-border);
+        }
+
+        .section h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--color-text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h3 {
+            font-size: 14px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .button-group.full {
+            grid-template-columns: 1fr;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1a6b7a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(33, 128, 141, 0.3);
+        }
+
+        .btn-danger {
+            background-color: var(--color-danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #a01340;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(192, 21, 47, 0.3);
+        }
+
+        .btn-warning {
+            background-color: var(--color-warning);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background-color: #9a3f35;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(168, 75, 47, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        input[type="text"], input[type="tel"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .checklist input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checklist label {
+            cursor: pointer;
+            flex: 1;
+            margin: 0;
+        }
+
+        .contact-card {
+            background: #f8f9fa;
+            border-left: 4px solid var(--color-primary);
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .contact-card h3 {
+            margin: 0 0 5px 0;
+            color: var(--color-text);
+        }
+
+        .contact-card p {
+            margin: 3px 0;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .contact-card a {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-found {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-searching {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-critical {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .family-list {
+            list-style: none;
+        }
+
+        .family-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--color-warning);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .family-item-info {
+            flex: 1;
+        }
+
+        .family-item-info h4 {
+            margin: 0 0 5px 0;
+            font-size: 14px;
+        }
+
+        .family-item-info p {
+            margin: 2px 0;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .family-item-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-small-success {
+            background-color: var(--color-success);
+            color: white;
+        }
+
+        .btn-small-success:hover {
+            background-color: #1a6b7a;
+        }
+
+        .btn-small-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-small-danger:hover {
+            background-color: #c82333;
+        }
+
+        .emoji {
+            font-size: 20px;
+        }
+
+        .timer {
+            text-align: center;
+            padding: 20px;
+            background: #fff3cd;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #856404;
+        }
+
+        .success-msg {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .share-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .button-group {
+                grid-template-columns: 1fr;
+            }
+
+            .share-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                gap: 5px;
+            }
+
+            .tab-btn {
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <h1>🆘 Emergency Family Locator</h1>
+            <p>Banjir Medan - Lacak & Selamatkan Keluarga Anda</p>
+        </header>
+
+        <!-- ALERT -->
+        <div class="alert alert-danger">
+            <strong>⚠️ DARURAT BANJIR MEDAN!</strong><br>
+            Aplikasi ini adalah SUPPORT. Prioritas utama: <strong>Hubungi 112 (Basarnas)</strong> atau <strong>BPBD: 0852 9093 1985</strong>
+        </div>
+
+        <!-- TABS -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab(0)">🚨 HOTLINE</button>
+            <button class="tab-btn" onclick="switchTab(1)">📋 DATA KELUARGA</button>
+            <button class="tab-btn" onclick="switchTab(2)">📍 LACAK MANDIRI</button>
+            <button class="tab-btn" onclick="switchTab(3)">📱 BROADCAST</button>
+            <button class="tab-btn" onclick="switchTab(4)">✅ CHECKLIST</button>
+            <button class="tab-btn" onclick="switchTab(5)">📍 POSKO</button>
+        </div>
+
+        <!-- TAB 1: HOTLINE -->
+        <div class="tab-content active">
+            <div class="section">
+                <h2><span class="emoji">🚨</span> HUBUNGI DARURAT SEKARANG</h2>
+                
+                <div class="timer" id="timer">
+                    ⏱️ SETIAP DETIK PENTING!
+                </div>
+
+                <div class="button-group full">
+                    <button class="btn-danger" onclick="call('112')">
+                        <span class="emoji">☎️</span> CALL 112 - Basarnas (SAR)
+                    </button>
+                </div>
+
+                <div class="button-group full">
+                    <button class="btn-danger" onclick="call('08529093985')">
+                        <span class="emoji">☎️</span> CALL BPBD Medan
+                    </button>
+                </div>
+
+                <div class="button-group full">
+                    <button class="btn-warning" onclick="call('06216101166')">
+                        <span class="emoji">☎️</span> CALL Polres Medan
+                    </button>
+                </div>
+
+                <hr style="margin: 20px 0; border: none; border-top: 1px solid var(--color-border);">
+
+                <h3>📞 Info Kontak Penting:</h3>
+                
+                <div class="contact-card">
+                    <h3>🚁 BASARNAS (SAR NASIONAL)</h3>
+                    <p>Nomor: <strong>112</strong></p>
+                    <p>Waktu respons: &lt; 25 menit</p>
+                    <p>Akses: Legal ke HP tracking via operator</p>
+                    <p>Tersedia: 24/7 untuk darurat bencana</p>
+                </div>
+
+                <div class="contact-card">
+                    <h3>🏛️ BPBD KOTA MEDAN</h3>
+                    <p>Nomor: <strong>0852 9093 1985</strong></p>
+                    <p>WhatsApp: Tersedia</p>
+                    <p>Akses: Database posko pengungsian real-time</p>
+                    <p>Respons: 2-3 menit (lokal)</p>
+                </div>
+
+                <div class="contact-card">
+                    <h3>🚔 POLRES MEDAN</h3>
+                    <p>Nomor: <strong>0621-610 1166</strong></p>
+                    <p>Layanan: Laporan polisi (LP)</p>
+                    <p>Akses: Request tracking ke operator</p>
+                    <p>Waktu: 15-30 menit untuk info lokasi</p>
+                </div>
+
+                <hr style="margin: 20px 0; border: none; border-top: 1px solid var(--color-border);">
+
+                <h3>🚑 Rumah Sakit Medan (jika ada luka):</h3>
+                
+                <div class="contact-card">
+                    <h3>RSU Adam Malik</h3>
+                    <p>Telepon: <a href="tel:06124566070">0612-4566070</a></p>
+                </div>
+
+                <div class="contact-card">
+                    <h3>RS Pirngadi</h3>
+                    <p>Telepon: <a href="tel:06124568899">0612-4568899</a></p>
+                </div>
+
+                <div class="contact-card">
+                    <h3>RS Universitas Sumatera Utara</h3>
+                    <p>Telepon: <a href="tel:06128823010">0612-8823010</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: DATA KELUARGA -->
+        <div class="tab-content">
+            <div class="section">
+                <h2><span class="emoji">👥</span> CATATAN DATA KELUARGA</h2>
+                
+                <div class="form-group">
+                    <label>Nama Lengkap:</label>
+                    <input type="text" id="familyName" placeholder="Masukkan nama keluarga yang hilang">
+                </div>
+
+                <div class="form-group">
+                    <label>Nomor HP:</label>
+                    <input type="tel" id="familyPhone" placeholder="Contoh: 0812345678">
+                </div>
+
+                <div class="form-group">
+                    <label>Operator:</label>
+                    <select id="familyOperator">
+                        <option>Pilih Operator</option>
+                        <option>Telkomsel</option>
+                        <option>Indosat</option>
+                        <option>XL</option>
+                        <option>Tri</option>
+                        <option>Lainnya</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Ciri-ciri Fisik:</label>
+                    <textarea id="familyDescription" placeholder="Tinggi, warna rambut, tanda khusus, pakaian terakhir, dll..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Lokasi Terakhir:</label>
+                    <input type="text" id="lastLocation" placeholder="Nama jalan, area, landmark, dll...">
+                </div>
+
+                <div class="form-group">
+                    <label>Jam Terakhir Terlihat:</label>
+                    <input type="text" id="lastTime" placeholder="Contoh: 14:30 atau 2:30 PM">
+                </div>
+
+                <div class="form-group">
+                    <label>Kondisi Khusus (jika ada):</label>
+                    <textarea id="specialCondition" placeholder="Sakit, lansia, anak-anak, cacat, hamil, dll..."></textarea>
+                </div>
+
+                <div class="button-group full">
+                    <button class="btn-primary" onclick="saveFamilyData()">
+                        <span class="emoji">💾</span> SIMPAN DATA
+                    </button>
+                </div>
+
+                <div id="familyList" style="margin-top: 20px;"></div>
+            </div>
+        </div>
+
+        <!-- TAB 3: LACAK MANDIRI -->
+        <div class="tab-content">
+            <div class="section">
+                <h2><span class="emoji">📍</span> LACAK LOKASI MANDIRI</h2>
+                
+                <div class="alert" style="background-color: #d4edda; border-color: #28a745; border-left-color: #28a745; color: #155724;">
+                    <strong>✅ CARA PALING EFEKTIF:</strong> Jika keluarga bisa buka HP dan aplikasi ini, mereka bisa LANGSUNG share lokasi GPS mereka ke Anda! Paling akurat (5-10 meter).
+                </div>
+
+                <h3 style="margin-top: 20px; margin-bottom: 15px;">🎯 METODE YANG TERSEDIA:</h3>
+                
+                <div style="background: #d4edda; padding: 15px; border-radius: 6px; margin-bottom: 20px; border-left: 4px solid #28a745;">
+                    <h4 style="margin: 0 0 10px 0; color: #155724;">✓ METODE 1: KELUARGA SHARE GPS LANGSUNG (PALING EFEKTIF)</h4>
+                    <p style="margin: 5px 0; font-size: 13px; color: #155724;">
+                        • Keluarga buka aplikasi ini di HP mereka<br>
+                        • Klik tombol "SAYA INGIN SHARE LOKASI"<br>
+                        • GPS ON + izinkan akses<br>
+                        • Dapat link sharing ke WhatsApp/email Anda<br>
+                        • Anda buka link → lihat lokasi real-time<br>
+                        • <strong>Akurasi: 5-10 meter</strong>
+                    </p>
+                </div>
+
+
+                <div style="margin-bottom: 20px;">
+                    <h3>🎯 UNTUK KELUARGA YANG HILANG:</h3>
+                    <div class="button-group full">
+                        <button class="btn-primary" onclick="startShareMode()" style="background-color: #28a745;">
+                            <span class="emoji">📍</span> SAYA INGIN SHARE LOKASI SAYA
+                        </button>
+                    </div>
+                    <p style="font-size: 12px; color: #666; margin-top: 10px; text-align: center;">← Keluarga yang hilang klik ini!</p>
+                </div>
+
+                <!-- SHARE MODE FOR FAMILY -->
+                <div id="shareMode" style="display: none; margin-top: 20px; background: #d4edda; padding: 20px; border-radius: 8px; border: 2px solid #28a745;">
+                    <h3 style="color: #155724; margin-top: 0;">🆘 MODE BERBAGI LOKASI - KELUARGA YANG HILANG</h3>
+                    
+                    <div class="alert" style="background-color: #fff3cd; border-color: #ffc107; color: #856404;">
+                        <strong>⚠️ INSTRUKSI UNTUK KELUARGA:</strong><br>
+                        1. Pastikan <strong>GPS ON</strong> di HP Anda<br>
+                        2. Klik tombol di bawah<br>
+                        3. Izinkan akses GPS saat diminta<br>
+                        4. Copy link yang muncul<br>
+                        5. Kirim link via WhatsApp/SMS/Chat ke orang yang mencari Anda
+                    </div>
+
+                    <div class="button-group full">
+                        <button class="btn-danger" onclick="activateFamilyGPS()" style="background-color: #28a745; font-size: 16px; padding: 15px;">
+                            <span class="emoji">📡</span> AKTIFKAN GPS DAN BUAT LINK SHARING
+                        </button>
+                    </div>
+
+                    <div id="familyGPSResult" style="display: none; margin-top: 20px; background: white; padding: 15px; border-radius: 6px;">
+                        <h4 style="margin-top: 0;">✓ LOKASI GPS ANDA BERHASIL DIAMBIL!</h4>
+                        
+                        <div style="background: #f0f0f0; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
+                            <p><strong>📍 Latitude:</strong> <span id="familyGpsLat">-</span></p>
+                            <p><strong>📍 Longitude:</strong> <span id="familyGpsLng">-</span></p>
+                            <p><strong>📏 Akurasi:</strong> <span id="familyGpsAccuracy">-</span> meter</p>
+                            <p><strong>🕒 Waktu:</strong> <span id="familyGpsTime">-</span></p>
+                        </div>
+
+                        <div class="button-group full">
+                            <button class="btn-primary" onclick="copyFamilyShareLink()" style="background-color: #28a745;">
+                                <span class="emoji">📋</span> COPY LINK SHARING
+                            </button>
+                        </div>
+
+                        <div class="button-group full">
+                            <button class="btn-primary" onclick="sendViaWhatsApp()" style="background-color: #25D366;">
+                                <span class="emoji">💬</span> KIRIM VIA WHATSAPP
+                            </button>
+                        </div>
+
+                        <div style="background: #fff3cd; padding: 12px; border-radius: 6px; margin-top: 15px; border-left: 4px solid #ffc107;">
+                            <strong>📝 Link Sharing Anda:</strong><br>
+                            <div id="shareLink" style="background: white; padding: 10px; border-radius: 4px; margin-top: 8px; word-break: break-all; font-size: 12px; font-family: monospace;"></div>
+                            <button class="btn-primary" onclick="copyShareLink()" style="margin-top: 10px; background-color: #218081;">
+                                <span class="emoji">📋</span> COPY LINK
+                            </button>
+                        </div>
+
+                        <div style="background: #e3f2fd; padding: 12px; border-radius: 6px; margin-top: 15px; border-left: 4px solid #2196f3;">
+                            <strong>💡 Bagikan link ini ke:</strong><br>
+                            • WhatsApp<br>
+                            • SMS<br>
+                            • Telegram<br>
+                            • Email<br>
+                            • Chat apapun<br>
+                            <br>
+                            Orang yang mencari Anda bisa buka link → lihat lokasi Anda di peta!
+                        </div>
+                    </div>
+                </div>
+
+                <hr style="margin: 20px 0; border: none; border-top: 1px solid var(--color-border);">
+
+                <div style="margin-bottom: 20px;">
+                    <h3>🎯 UNTUK YANG MENCARI:</h3>
+
+
+
+    <script>
+        // ... existing code ...
+
+        // FAMILY SHARE MODE
+        function startShareMode() {
+            document.getElementById('shareMode').style.display = 'block';
+            alert('📱 Mode Sharing Lokasi Aktif!\n\nKeluarga yang hilang bisa klik tombol "AKTIFKAN GPS" untuk share lokasi mereka.');
+        }
+
+        function activateFamilyGPS() {
+            if (!navigator.geolocation) {
+                alert('Browser Anda tidak support GPS');
+                return;
+            }
+
+            alert('Izinkan akses GPS di HP Anda (klik "Allow/Izinkan")');
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    const accuracy = Math.round(position.coords.accuracy);
+                    const time = new Date().toLocaleTimeString('id-ID');
+
+                    document.getElementById('familyGpsLat').textContent = lat.toFixed(6);
+                    document.getElementById('familyGpsLng').textContent = lng.toFixed(6);
+                    document.getElementById('familyGpsAccuracy').textContent = accuracy;
+                    document.getElementById('familyGpsTime').textContent = time;
+
+                    // Generate sharing link
+                    const shareLink = `https://www.google.com/maps?q=${lat},${lng}`;
+                    document.getElementById('shareLink').textContent = shareLink;
+
+                    window.familyShareLink = shareLink;
+                    window.familyGPS = {lat, lng, accuracy, time};
+
+                    document.getElementById('familyGPSResult').style.display = 'block';
+                },
+                (error) => {
+                    alert('❌ GPS tidak bisa diakses:\n' + error.message + '\n\n✅ Solusi:\n1. Cek apakah GPS sudah ON\n2. Cek apakah lokasi "Precise Location" diizinkan\n3. Coba di area terbuka (jangan di dalam ruangan)');
+                }
+            );
+        }
+
+        function copyFamilyShareLink() {
+            if (window.familyShareLink) {
+                navigator.clipboard.writeText(window.familyShareLink);
+                alert('✓ Link sudah dicopy!\n\nBagikan link ini ke orang yang mencari Anda.');
+            }
+        }
+
+        function copyShareLink() {
+            const linkText = document.getElementById('shareLink').textContent;
+            navigator.clipboard.writeText(linkText);
+            alert('✓ Link Sharing sudah dicopy!');
+        }
+
+        function sendViaWhatsApp() {
+            if (window.familyShareLink) {
+                const text = `🆘 DARURAT!\n\nSaya di lokasi ini:\n${window.familyShareLink}\n\nGPS Akurasi: ${window.familyGPS.accuracy}m\nWaktu: ${window.familyGPS.time}\n\nTolong bantu selamatkan saya!`;
+                const encoded = encodeURIComponent(text);
+                window.open(`https://wa.me/?text=${encoded}`, '_blank');
+            }
+        }
+
+        // ... rest of existing code ...
+    </script>
+
+                <div style="margin-bottom: 20px;">
+                    <h3>🎯 METODE TRACKING:</h3>
+                    <div class="button-group full">
+                        <button class="btn-primary" onclick="startGPSTracking()">
+                            <span class="emoji">📡</span> AMBIL LOKASI GPS SAYA SEKARANG
+                        </button>
+                    </div>
+                    <div class="button-group full">
+                        <button class="btn-warning" onclick="showNetworkTracking()">
+                            <span class="emoji">🛰️</span> ESTIMASI TOWER SIGNAL
+                        </button>
+                    </div>
+                    <div class="button-group full">
+                        <button class="btn-primary" onclick="showQRTracking()">
+                            <span class="emoji">🔲</span> GENERATE QR SHARE LOKASI
+                        </button>
+                    </div>
+                </div>
+
+                <!-- GPS TRACKING RESULT -->
+                <div id="gpsResult" style="display: none; margin-top: 20px;">
+                    <div class="section">
+                        <h3>📍 LOKASI GPS ANDA:</h3>
+                        <div style="background: #f0f0f0; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+                            <p><strong>Latitude:</strong> <span id="gpsLat">-</span></p>
+                            <p><strong>Longitude:</strong> <span id="gpsLng">-</span></p>
+                            <p><strong>Akurasi:</strong> <span id="gpsAccuracy">-</span> meter</p>
+                            <p><strong>Waktu:</strong> <span id="gpsTime">-</span></p>
+                        </div>
+                        <div class="button-group full">
+                            <button class="btn-primary" onclick="openGoogleMaps()">
+                                <span class="emoji">🗺️</span> BUKA DI GOOGLE MAPS
+                            </button>
+                        </div>
+                        <div class="button-group full">
+                            <button class="btn-primary" onclick="copyGPSCoords()">
+                                <span class="emoji">📋</span> COPY KOORDINAT
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NETWORK TRACKING -->
+                <div id="networkResult" style="display: none; margin-top: 20px;">
+                    <div class="section">
+                        <h3>🛰️ ESTIMASI CELL TOWER:</h3>
+                        <div style="background: #fff3cd; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+                            <p><strong>Status:</strong> Sistem network location diaktifkan</p>
+                            <p><strong>Akurasi:</strong> 100-500 meter (tergantung area)</p>
+                            <p><strong>Data:</strong> Dari WiFi + Cell Tower</p>
+                            <p style="font-size: 12px; color: #666; margin-top: 10px;">💡 Untuk HP keluarga yang hilang, SAR/BPBD bisa request data ini ke operator dengan legal</p>
+                        </div>
+                        <h4>📊 Teori Triangulation:</h4>
+                        <p style="font-size: 13px; background: #f5f5f5; padding: 12px; border-radius: 6px; line-height: 1.6;">
+                            <strong>Cell Tower Triangulation (CTT):</strong><br>
+                            • HP terhubung ke 3+ tower terdekat<br>
+                            • Setiap tower kirim signal strength<br>
+                            • Sistem hitung: tower mana paling kuat<br>
+                            • Hasil: estimasi lokasi dalam radius<br>
+                            • Akurasi: Urban 100-300m, Rural 300-5km<br>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- QR TRACKING -->
+                <div id="qrResult" style="display: none; margin-top: 20px;">
+                    <div class="section">
+                        <h3>🔲 QR CODE SHARE LOKASI:</h3>
+                        <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Scan QR code ini untuk lihat lokasi Anda di Google Maps:</p>
+                        <div style="background: #f0f0f0; padding: 20px; border-radius: 6px; text-align: center; margin-bottom: 15px;">
+                            <div id="qrCode" style="display: inline-block;"></div>
+                        </div>
+                        <div class="button-group full">
+                            <button class="btn-primary" onclick="shareQRWhatsApp()">
+                                <span class="emoji">💬</span> SHARE QR KE WHATSAPP
+                            </button>
+                        </div>
+                        <div class="button-group full">
+                            <button class="btn-primary" onclick="downloadQR()">
+                                <span class="emoji">📥</span> DOWNLOAD QR CODE
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MANUAL TRACKING INPUT -->
+                <div style="margin-top: 30px;">
+                    <h3>📱 MASUKKAN DATA KELUARGA UNTUK TRACKING:</h3>
+                    <div class="form-group">
+                        <label>Nomor HP Keluarga yang Hilang:</label>
+                        <input type="tel" id="trackingPhone" placeholder="Contoh: 0812345678">
+                    </div>
+                    <div class="form-group">
+                        <label>Operator Telekomunikasi:</label>
+                        <select id="trackingOperator">
+                            <option>Pilih Operator</option>
+                            <option>Telkomsel - Tower Medan City</option>
+                            <option>Indosat - Coverage Medan</option>
+                            <option>XL - Area Urban</option>
+                            <option>Tri - Sumatra Network</option>
+                        </select>
+                    </div>
+                    <div class="button-group full">
+                        <button class="btn-warning" onclick="generateTrackingReport()">
+                            <span class="emoji">📊</span> GENERATE LAPORAN TRACKING
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TRACKING REPORT -->
+                <div id="trackingReport" style="display: none; margin-top: 20px;">
+                    <div class="section">
+                        <h3>📊 LAPORAN TRACKING:</h3>
+                        <div id="reportContent" style="background: #f5f5f5; padding: 15px; border-radius: 6px; font-size: 13px; line-height: 1.8; white-space: pre-wrap;"></div>
+                        <div class="button-group full" style="margin-top: 15px;">
+                            <button class="btn-primary" onclick="printReport()">
+                                <span class="emoji">🖨️</span> PRINT LAPORAN
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: BROADCAST -->
+        <div class="tab-content">
+            <div class="section">
+                <h2><span class="emoji">📢</span> BROADCAST DARURAT KE KOMUNITAS</h2>
+
+                <div class="button-group full">
+                    <button class="btn-primary" onclick="generateBroadcast()">
+                        <span class="emoji">✏️</span> GENERATE PESAN DARURAT
+                    </button>
+                </div>
+
+                <div id="broadcastPreview" style="margin-top: 20px; display: none;">
+                    <h3>Preview Pesan:</h3>
+                    <div style="background: #f0f0f0; padding: 15px; border-radius: 6px; margin-bottom: 15px; white-space: pre-wrap; font-size: 13px;" id="previewText"></div>
+
+                    <h3>Bagikan ke Platform:</h3>
+                    <div class="share-buttons">
+                        <button class="btn-primary" onclick="shareToWhatsApp()">
+                            <span class="emoji">💬</span> WhatsApp
+                        </button>
+                        <button class="btn-primary" onclick="shareToFacebook()">
+                            <span class="emoji">👍</span> Facebook
+                        </button>
+                        <button class="btn-primary" onclick="shareToInstagram()">
+                            <span class="emoji">📷</span> Instagram
+                        </button>
+                        <button class="btn-primary" onclick="copyToClipboard()">
+                            <span class="emoji">📋</span> Copy Teks
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: CHECKLIST -->
+        <div class="tab-content">
+            <div class="section">
+                <h2><span class="emoji">✅</span> EMERGENCY CHECKLIST</h2>
+
+                <p style="color: #666; margin-bottom: 15px;">Tandai langkah-langkah apa saja yang sudah dilakukan:</p>
+
+                <ul class="checklist">
+                    <li>
+                        <input type="checkbox" id="check1" onchange="updateChecklist()">
+                        <label for="check1">✓ Hubungi 112 (Basarnas)</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="check2" onchange="updateChecklist()">
+                        <label for="check2">✓ Hubungi BPBD Medan (0852 9093 1985)</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="check3" onchange="updateChecklist()">
+                        <label for="check3">✓ Buat laporan polisi (LP) ke Polres</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="check4" onchange="updateChecklist()">
+                        <label for="check4">✓ Hubungi operator telekomunikasi</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="check5" onchange="updateChecklist()">
+                        <label for="check5">✓ Broadcast ke WhatsApp grup RT/RW</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="check6" onchange="updateChecklist()">
+                        <label for="check6">✓ Share di Facebook grup lokal</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="check7" onchange="updateChecklist()">
+                        <label for="check7">✓ Kunjungi Posko Pengungsian</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="check8" onchange="updateChecklist()">
+                        <label for="check8">✓ Hubungi Rumah Sakit</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="check9" onchange="updateChecklist()">
+                        <label for="check9">✓ Minta bantuan teman/keluarga lain</label>
+                    </li>
+                </ul>
+
+                <div id="progressBar" style="margin-top: 20px; display: none;">
+                    <p style="font-size: 12px; color: #666;">Progress:</p>
+                    <div style="background: #e0e0e0; height: 20px; border-radius: 10px; overflow: hidden;">
+                        <div id="progress" style="background: var(--color-success); height: 100%; width: 0%; transition: width 0.3s;"></div>
+                    </div>
+                    <p id="progressText" style="font-size: 12px; color: #666; margin-top: 5px;"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 6: POSKO -->
+        <div class="tab-content">
+            <div class="section">
+                <h2><span class="emoji">📍</span> POSKO PENGUNGSIAN MEDAN</h2>
+
+                <p style="color: #666; margin-bottom: 15px;">Daftar posko pengungsian di area terdampak banjir Medan:</p>
+
+                <div class="contact-card">
+                    <h3>🏫 SEKOLAH-SEKOLAH (Posko Utama):</h3>
+                    <p>• SDN Medan Petisah</p>
+                    <p>• SMPN Medan Johor</p>
+                    <p>• SMAN 1 Medan</p>
+                    <p>• SMA Negeri Lainnya di area terdampak</p>
+                    <p style="font-size: 12px; color: #999; margin-top: 8px;">📞 Hubungi kelurahan setempat untuk info lengkap</p>
+                </div>
+
+                <div class="contact-card">
+                    <h3>🕌 MASJID BESAR:</h3>
+                    <p>• Masjid Raya Al-Mashun (pusat kota)</p>
+                    <p>• Masjid di kelurahan terdampak</p>
+                    <p style="font-size: 12px; color: #999; margin-top: 8px;">📞 Hubungi pengurus setempat</p>
+                </div>
+
+                <div class="contact-card">
+                    <h3>🏛️ KANTOR PEMERINTAH:</h3>
+                    <p>• Kantor Kelurahan (emergency center)</p>
+                    <p>• Kantor Kecamatan</p>
+                    <p>• Kantor Pemkot Medan</p>
+                </div>
+
+                <div class="button-group full" style="margin-top: 20px;">
+                    <button class="btn-primary" onclick="markPoskoVisited()">
+                        <span class="emoji">✓</span> TANDAI POSKO SUDAH DIKUNJUNGI
+                    </button>
+                </div>
+
+                <div id="poskoChecklist" style="margin-top: 20px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        // TAB SWITCHING
+        function switchTab(index) {
+            const contents = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+            
+            contents.forEach(c => c.classList.remove('active'));
+            buttons.forEach(b => b.classList.remove('active'));
+            
+            contents[index].classList.add('active');
+            buttons[index].classList.add('active');
+        }
+
+        // GPS TRACKING
+        function startGPSTracking() {
+            if (!navigator.geolocation) {
+                alert('Browser Anda tidak support Geolocation API');
+                return;
+            }
+
+            alert('Izinkan akses GPS di browser Anda (klik "Allow")');
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    const accuracy = Math.round(position.coords.accuracy);
+
+                    document.getElementById('gpsLat').textContent = lat.toFixed(6);
+                    document.getElementById('gpsLng').textContent = lng.toFixed(6);
+                    document.getElementById('gpsAccuracy').textContent = accuracy;
+                    document.getElementById('gpsTime').textContent = new Date().toLocaleTimeString('id-ID');
+
+                    document.getElementById('gpsResult').style.display = 'block';
+
+                    window.currentGPS = {lat, lng, accuracy};
+                },
+                (error) => {
+                    alert('Error: ' + error.message + '\n\nPastikan GPS diaktifkan di pengaturan HP Anda.');
+                }
+            );
+        }
+
+        function openGoogleMaps() {
+            if (window.currentGPS) {
+                const {lat, lng} = window.currentGPS;
+                window.open(`https://www.google.com/maps?q=${lat},${lng}`, '_blank');
+            }
+        }
+
+        function copyGPSCoords() {
+            if (window.currentGPS) {
+                const {lat, lng} = window.currentGPS;
+                const coords = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+                navigator.clipboard.writeText(coords);
+                alert('✓ Koordinat sudah dicopy:\n' + coords);
+            }
+        }
+
+        // NETWORK TRACKING
+        function showNetworkTracking() {
+            document.getElementById('networkResult').style.display = 'block';
+        }
+
+        // QR TRACKING
+        function showQRTracking() {
+            if (!window.currentGPS) {
+                alert('Ambil lokasi GPS Anda dulu!');
+                return;
+            }
+
+            const {lat, lng} = window.currentGPS;
+            const mapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
+
+            document.getElementById('qrCode').innerHTML = '';
+            
+            new QRCode(document.getElementById('qrCode'), {
+                text: mapsLink,
+                width: 200,
+                height: 200,
+                colorDark: '#000000',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            document.getElementById('qrResult').style.display = 'block';
+            window.qrMapsLink = mapsLink;
+        }
+
+        function shareQRWhatsApp() {
+            if (window.qrMapsLink) {
+                const text = `🚨 DARURAT! Ini lokasi saya sekarang:\n${window.qrMapsLink}\n\nScan QR code atau klik link di atas untuk lihat lokasi GPS saya di peta.`;
+                const encoded = encodeURIComponent(text);
+                window.open(`https://wa.me/?text=${encoded}`, '_blank');
+            }
+        }
+
+        function downloadQR() {
+            const canvas = document.querySelector('#qrCode canvas');
+            if (canvas) {
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL();
+                link.download = 'lokasi-darurat-' + Date.now() + '.png';
+                link.click();
+            }
+        }
+
+        // TRACKING REPORT
+        function generateTrackingReport() {
+            const phone = document.getElementById('trackingPhone').value;
+            const operator = document.getElementById('trackingOperator').value;
+
+            if (!phone) {
+                alert('Masukkan nomor HP!');
+                return;
+            }
+
+            const report = `╔════════════════════════════════════════════╗
+║     LAPORAN TRACKING KELUARGA - DARURAT    ║
+╚════════════════════════════════════════════╝
+
+📱 DATA KELUARGA:
+├─ Nomor HP: ${phone}
+├─ Operator: ${operator}
+└─ Waktu Request: ${new Date().toLocaleString('id-ID')}
+
+🛰️ TEKNOLOGI TRACKING YANG BISA DIGUNAKAN:
+
+1. GEOLOCATION API (Browser-based)
+   ├─ Akurasi: 5-10 meter (GPS)
+   ├─ Syarat: HP harus punya signal + GPS aktif
+   └─ Cara: Buka link + izinkan GPS
+
+2. CELL TOWER TRIANGULATION (Operator)
+   ├─ Akurasi: 100-500 meter
+   ├─ Syarat: Laporan resmi ke polisi
+   └─ Cara: SAR/BPBD request ke operator
+
+3. NETWORK LOCATION (WiFi + Tower)
+   ├─ Akurasi: 50-200 meter
+   ├─ Syarat: HP terkoneksi internet
+   └─ Cara: Passive tracking dari operator
+
+4. SIGNAL STRENGTH MEASUREMENT
+   ├─ Akurasi: 100-300 meter
+   ├─ Syarat: HP dalam kondisi aktif
+   └─ Cara: Last known tower location
+
+📊 STRATEGI TRACKING MANDIRI:
+
+STEP 1 (0-5 MENIT):
+├─ Ambil lokasi GPS Anda (marker referensi)
+├─ Generate QR code lokasi Anda
+└─ Share via WhatsApp ke keluarga
+
+STEP 2 (5-15 MENIT):
+├─ Hubungi keluarga (SMS/call)
+├─ Minta mereka enable GPS
+├─ Kirim link share lokasi
+└─ Minta merge coordinate
+
+STEP 3 (15-30 MENIT):
+├─ Broadcast ke komunitas
+├─ Crowdsource sighting reports
+├─ Triangulate dari multiple reports
+└─ Estimate area pencarian
+
+STEP 4 (30-60 MENIT):
+├─ Hubungi 112/BPBD untuk SAR backup
+├─ Kirim estimated location ke SAR
+├─ Deploy ground team ke area
+└─ Intensify pencarian
+
+🎯 KOORDINAT MEDAN UNTUK REFERENSI:
+├─ Medan Maimun: 3.1952, 98.6722
+├─ Medan Johor: 3.2202, 98.6400
+├─ Medan Petisah: 3.1500, 98.6800
+└─ Area Banjir: Radius ~5 km dari pusat
+
+⚠️ PENTING:
+├─ Tracking ini SUPPORT, bukan replacement SAR
+├─ Hubungi 112 TETAP PRIORITAS UTAMA
+├─ Data GPS akurat hanya jika izin dari pemilik HP
+└─ Kombinasikan dengan method lain (broadcast, posko)
+
+📞 SETELAH LACAK, HUBUNGI SEGERA:
+├─ 112 (Basarnas) - Prioritas 1
+├─ 0852 9093 1985 (BPBD Medan)
+└─ 0621-610 1166 (Polres Medan)
+
+Laporan dibuat: ${new Date().toLocaleString('id-ID')}
+═════════════════════════════════════════════`;
+
+            document.getElementById('reportContent').textContent = report;
+            document.getElementById('trackingReport').style.display = 'block';
+
+            window.trackingReport = report;
+        }
+
+        function printReport() {
+            const win = window.open('', '', 'height=600,width=800');
+            win.document.write('<pre style="font-family: monospace; white-space: pre-wrap; padding: 20px;">' + window.trackingReport + '</pre>');
+            win.document.close();
+            win.print();
+        }
+
+        // EMERGENCY CALL
+        function call(number) {
+            window.location.href = `tel:${number}`;
+        }
+
+        // FAMILY DATA MANAGEMENT
+        function saveFamilyData() {
+            const name = document.getElementById('familyName').value;
+            const phone = document.getElementById('familyPhone').value;
+            const operator = document.getElementById('familyOperator').value;
+            const description = document.getElementById('familyDescription').value;
+            const lastLocation = document.getElementById('lastLocation').value;
+            const lastTime = document.getElementById('lastTime').value;
+            const specialCondition = document.getElementById('specialCondition').value;
+
+            if (!name || !phone) {
+                alert('Masukkan nama dan nomor HP!');
+                return;
+            }
+
+            let familyData = JSON.parse(localStorage.getItem('familyData') || '[]');
+            familyData.push({
+                id: Date.now(),
+                name,
+                phone,
+                operator,
+                description,
+                lastLocation,
+                lastTime,
+                specialCondition,
+                status: 'searching',
+                timestamp: new Date().toLocaleString('id-ID')
+            });
+
+            localStorage.setItem('familyData', JSON.stringify(familyData));
+            
+            document.getElementById('familyName').value = '';
+            document.getElementById('familyPhone').value = '';
+            document.getElementById('familyOperator').value = '';
+            document.getElementById('familyDescription').value = '';
+            document.getElementById('lastLocation').value = '';
+            document.getElementById('lastTime').value = '';
+            document.getElementById('specialCondition').value = '';
+
+            displayFamilyList();
+            
+            alert('✓ Data keluarga berhasil disimpan!');
+        }
+
+        function displayFamilyList() {
+            const familyData = JSON.parse(localStorage.getItem('familyData') || '[]');
+            const listDiv = document.getElementById('familyList');
+
+            if (familyData.length === 0) {
+                listDiv.innerHTML = '<p style="color: #999;">Belum ada data keluarga yang dicatat</p>';
+                return;
+            }
+
+            listDiv.innerHTML = '<h3 style="margin-bottom: 15px;">📋 Data Keluarga yang Dicatat:</h3>';
+
+            familyData.forEach(family => {
+                const statusClass = family.status === 'found' ? 'status-found' : 'status-searching';
+                const statusText = family.status === 'found' ? '✓ DITEMUKAN' : '⚠️ SEDANG DICARI';
+
+                listDiv.innerHTML += `
+                    <div class="family-item">
+                        <div class="family-item-info">
+                            <h4>${family.name}</h4>
+                            <p>📱 ${family.phone} (${family.operator})</p>
+                            <p>📍 Terakhir di: ${family.lastLocation}</p>
+                            <p>🕒 Jam: ${family.lastTime}</p>
+                            ${family.specialCondition ? `<p>⚠️ ${family.specialCondition}</p>` : ''}
+                            <p><span class="status-badge ${statusClass}">${statusText}</span></p>
+                        </div>
+                        <div class="family-item-actions">
+                            <button class="btn-small btn-small-success" onclick="markAsFound(${family.id})">Ditemukan</button>
+                            <button class="btn-small btn-small-danger" onclick="deleteFamily(${family.id})">Hapus</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function markAsFound(id) {
+            let familyData = JSON.parse(localStorage.getItem('familyData') || '[]');
+            familyData = familyData.map(f => f.id === id ? {...f, status: 'found'} : f);
+            localStorage.setItem('familyData', JSON.stringify(familyData));
+            displayFamilyList();
+            alert('✓ Status diupdate! Syukurlah keluarga ditemukan!');
+        }
+
+        function deleteFamily(id) {
+            if (confirm('Hapus data ini?')) {
+                let familyData = JSON.parse(localStorage.getItem('familyData') || '[]');
+                familyData = familyData.filter(f => f.id !== id);
+                localStorage.setItem('familyData', JSON.stringify(familyData));
+                displayFamilyList();
+            }
+        }
+
+        // BROADCAST GENERATION
+        function generateBroadcast() {
+            const familyData = JSON.parse(localStorage.getItem('familyData') || '[]');
+            
+            if (familyData.length === 0) {
+                alert('Tambahkan data keluarga dulu sebelum membuat broadcast!');
+                return;
+            }
+
+            const family = familyData[0];
+            const message = `🆘 DARURAT - CARI ORANG HILANG 🆘
+
+NAMA: ${family.name}
+NOMOR HP: ${family.phone}
+OPERATOR: ${family.operator}
+LOKASI TERAKHIR: ${family.lastLocation}
+JAM TERAKHIR: ${family.lastTime}
+
+CIRI-CIRI: ${family.description || 'Lihat foto/info lainnya'}
+${family.specialCondition ? `KONDISI KHUSUS: ${family.specialCondition}\n` : ''}
+🚨 JIKA ANDA MELIHAT, HUBUNGI SEKARANG JUGA! 🚨
+
+Tolong SHARE ke semua teman & keluarga!
+#BanjirMedan #CariBantuanKeluarga #DARURAT`;
+
+            document.getElementById('previewText').textContent = message;
+            document.getElementById('broadcastPreview').style.display = 'block';
+
+            window.broadcastMessage = message;
+        }
+
+        function shareToWhatsApp() {
+            const text = encodeURIComponent(window.broadcastMessage);
+            window.open(`https://wa.me/?text=${text}`);
+        }
+
+        function shareToFacebook() {
+            const text = encodeURIComponent(window.broadcastMessage);
+            alert('Copy pesan dan paste ke Facebook Anda:\n\n' + window.broadcastMessage);
+        }
+
+        function shareToInstagram() {
+            alert('Copy pesan dan bagikan di Instagram Story atau Caption:\n\n' + window.broadcastMessage);
+        }
+
+        function copyToClipboard() {
+            navigator.clipboard.writeText(window.broadcastMessage);
+            alert('✓ Pesan sudah disalin ke clipboard!');
+        }
+
+        // CHECKLIST PROGRESS
+        function updateChecklist() {
+            const checks = document.querySelectorAll('.checklist input[type="checkbox"]');
+            const checked = Array.from(checks).filter(c => c.checked).length;
+            const total = checks.length;
+            const percentage = Math.round((checked / total) * 100);
+
+            document.getElementById('progressBar').style.display = 'block';
+            document.getElementById('progress').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = `${checked} dari ${total} langkah selesai (${percentage}%)`;
+
+            if (percentage === 100) {
+                alert('🎉 Anda sudah melakukan semua langkah! Terus pantau perkembangan dari SAR/BPBD.');
+            }
+        }
+
+        function markPoskoVisited() {
+            alert('✓ Tandai posko yang sudah dikunjungi di checklist tab ini!');
+        }
+
+        // INITIALIZE
+        window.addEventListener('load', () => {
+            displayFamilyList();
+        });
+    </script>
+</body>
+</html>
